@@ -18,7 +18,7 @@
         "symfony/http-kernel": ">=2.1.0",
         "doctrine/orm": ">=2.2",
         "symfony/twig-bundle": ">=2.1.0",
-        "samson/unexpected-response-bundle": "dev-master"
+        "samson/unexpected-response-bundle": "0.1.*"
     },
     "require-dev": {
         "symfony/symfony": ">=2.1.0"
