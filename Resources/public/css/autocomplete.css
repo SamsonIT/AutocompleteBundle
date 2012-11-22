@@ -1,0 +1,13 @@
+.samson-autocomplete .select2-results {
+    overflow-y: scroll !important;
+}
+.samson-autocomplete .select2-results .select2-result-selectable {
+    border-width: 1px;
+    border-style: outset;
+    margin-bottom: 2px;
+    margin-right: 4px;
+}
+.samson-autocomplete .select2-results .select2-result-label {
+    margin: 0 1em 0 0 !important;
+    padding: 1px 7px 2px !important;
+}

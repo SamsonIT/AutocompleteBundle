@@ -1,0 +1,30 @@
+{
+    "name": "samson/autocomplete-bundle",
+    "description": "Easily integrate the Select2 autocomplete widget into your Symfony application to search Doctrine entities",
+    "keywords": ["symfony", "doctrine", "orm", "autocomplete", "select2"],
+    "homepage": "https://github.com/SamsonIT/AutocompleteBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Bart van den Burg",
+            "email": "bart@samson-it.nl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/form": ">=2.1.0",
+        "symfony/http-kernel": ">=2.1.0",
+        "doctrine/orm": ">=2.2",
+        "symfony/twig-bundle": ">=2.1.0",
+        "samson/unexpected-response-bundle": "dev-master"
+    },
+    "require-dev": {
+        "symfony/symfony": ">=2.1.0"
+    },
+    "autoload": {
+        "psr-0": { "Samson\\Bundle\\AutocompleteBundle": "" }
+    },
+    "target-dir": "Samson/Bundle/AutocompleteBundle"
+}

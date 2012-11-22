@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="form.type.autocomplete" class="Samson\Bundle\AutocompleteBundle\Form\Type\AutoCompleteType">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="templating" />
+            <argument type="service" id="service_container" />
+            <tag name="form.type" alias="autocomplete" />
+        </service>
+
+        <service class="Samson\Bundle\AutocompleteBundle\Twig\TwigExtension">
+            <argument type="service" id="service_container"/>
+            <tag name="twig.extension"/>
+        </service>
+    </services>
+</container>

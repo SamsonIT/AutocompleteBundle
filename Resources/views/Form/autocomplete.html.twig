@@ -1,0 +1,8 @@
+{% block autocomplete_widget %}
+{{ form_widget(form) }}
+<script type='text/javascript'>
+$(document).ready(function() {
+    $("#{{ id }}").samsonSelect2();
+});
+</script>
+{% endblock %}
