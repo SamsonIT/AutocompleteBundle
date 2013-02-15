@@ -49,7 +49,7 @@ class AutoCompleteType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $em = $this->doctrine->getEntityManager($options['em']);
+        $em = $this->doctrine->getManager($options['em']);
         $er = $em->getRepository($options['class']);
 
         if ( ! isset($options['query_builder'])) {
