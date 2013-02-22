@@ -9,15 +9,17 @@ use Doctrine\ORM\QueryBuilder;
 use Samson\Bundle\AutocompleteBundle\Form\DataTransformer\EntityToAutocompleteDataTransformer;
 use Samson\Bundle\AutocompleteBundle\Form\Listener\AutoCompleteTypeListener;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\Util\PropertyPath;
 use Symfony\Component\HttpFoundation\File\Exception\UnexpectedTypeException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\PropertyAccess\PropertyPath;
+
 
 /**
  * @author Bart van den Burg <bart@samson-it.nl>

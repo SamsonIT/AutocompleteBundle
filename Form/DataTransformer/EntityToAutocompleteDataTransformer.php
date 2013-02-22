@@ -4,7 +4,7 @@ namespace Samson\Bundle\AutocompleteBundle\Form\DataTransformer;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\PropertyAccess\PropertyPath;
 
 /**
  * @author Bart van den Burg <bart@samson-it.nl>
