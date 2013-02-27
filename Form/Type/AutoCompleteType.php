@@ -95,7 +95,16 @@ class AutoCompleteType extends AbstractType
         if (array_key_exists('data-display-value', $view->vars['attr']) && $view->vars['attr']['data-display-value']) {
             return;
         }
+
+        $em = $this->doctrine->getManager();
+        $softDeleteEnabled = array_key_exists('soft_delete', $em->getFilters()->getEnabledFilters());
+        if ($softDeleteEnabled) {
+            $em->getFilters()->disable('soft_delete');
+        }
         $view->vars['attr']['data-display-value'] = null !== $form->getData() ? trim($this->getLabel($options['template'], $form->getData())) : null;
+        if ($softDeleteEnabled) {
+            $em->getFilters()->enable('soft_delete');
+        }
     }
 
     public function getLabel($template, $result, array $searchWords = array(), $highlight = false, array $extraParams = null)
