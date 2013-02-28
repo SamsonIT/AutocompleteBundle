@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * @author Bart van den Burg <bart@samson-it.nl>
@@ -31,7 +33,7 @@ class AutoCompleteTypeListener implements EventSubscriberInterface
     const KEY_SEARCH = '__autocomplete_search';
 
     /**
-     * @var AutocompleteType
+     * @var AutoCompleteType
      */
     private $type;
 
@@ -44,7 +46,13 @@ class AutoCompleteTypeListener implements EventSubscriberInterface
      * @var Container
      */
     private $container;
-    
+
+    /**
+     *
+     * @var PropertyAccessor
+     */
+    private $propertyAccessor;
+
     /**
      * Construct a new AutoCompleteFormListener
      * 
@@ -57,6 +65,7 @@ class AutoCompleteTypeListener implements EventSubscriberInterface
         $this->type = $type;
         $this->options = $options;
         $this->container = $container;
+        $this->propertyAccessor = PropertyAccess::getPropertyAccessor();
     }
     
     /**
@@ -117,7 +126,7 @@ class AutoCompleteTypeListener implements EventSubscriberInterface
         $responseData = array();
 
         foreach ($results as $result) {
-            $id = $this->options['identifier_propertypath'] ? $this->options['identifier_propertypath']->getValue( $result ) : $result->getId() ;
+            $id = $this->options['identifier_propertypath'] ? $this->propertyAccessor->getValue($result, $this->options['identifier_propertypath']) : $result->getId() ;
 
             $responseData[] = array(
                 "id" => $id,
@@ -130,7 +139,7 @@ class AutoCompleteTypeListener implements EventSubscriberInterface
 
         throw new UnexpectedResponseException($response);
     }
-    
+
     private function parseNameIntoParts($name, $formName)
     {
         $cur = strlen($formName);

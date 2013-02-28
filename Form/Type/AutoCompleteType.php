@@ -140,9 +140,7 @@ class AutoCompleteType extends AbstractType
             'identifier' => null,
             'extra_params' => array(),
             'data_class' => null,
-            'identifier_propertypath' => function(Options $options) {
-                return $options['identifier'] ? new PropertyPath($options['identifier']) : null;
-            },
+            'identifier_propertypath' => null,
             'attr' => function(Options $options) {
                 return array('style' => 'width: '.$options['width']);
             }
