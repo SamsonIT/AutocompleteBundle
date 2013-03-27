@@ -9,6 +9,10 @@ How to install
 Currently, you'll need to follow these steps to ensure the autocomplete will
 work:
 
+ * Enable this and the UnexpectedResponseBundle in your AppKernel
+
+Example: https://github.com/SamsonIT/ShowCase/blob/master/app/AppKernel.php#L22
+
  * Make sure the latest JQuery version is loaded (JQuery UI is not necessary)
  * Make sure the latest Select2 javascript is loaded
  * Make sure the latest Select2 css files are loaded and that the images bundled
