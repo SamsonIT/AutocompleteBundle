@@ -1,9 +1,9 @@
 $(document).ready(function() {
     $.fn.extend({
-        samsonSelect2: function() {
+        samsonSelect2: function(options) {
             var $el = $(this);
-    
-            $(this).select2({
+            
+            $(this).select2($.extend(options, {
                 placeholder: "",
                 allowClear: true,
                 initSelection: function(element, callback) {
@@ -63,7 +63,7 @@ $(document).ready(function() {
                     }
                 },
                 dropdownCssClass: 'samson-autocomplete'
-            })
+            }))
             if (!$(this).val() && $(this).data('display-value')) {
                 $(this).select2('open')
                 $(this).select2('container').find('input[type="text"]').val($(this).data('display-value')).trigger('keydown');
