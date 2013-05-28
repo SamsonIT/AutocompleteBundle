@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Samson\Bundle\AutocompleteBundle\Form\DataTransformer\EntityToAutocompleteDataTransformer;
 use Samson\Bundle\AutocompleteBundle\Form\Listener\AutoCompleteTypeListener;
+use Samson\Bundle\AutocompleteBundle\Query\ResultsFetcher;
+use Samson\Bundle\AutocompleteBundle\Templating\AutocompleteResponseFormatter;
+use Samson\Bundle\AutocompleteBundle\Templating\LabelBuilder;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,20 +36,21 @@ class AutoCompleteType extends AbstractType
     private $doctrine;
 
     /**
-     * @var TwigEngine 
-     */
-    private $templating;
-
-    /**
      * @var Container
      */
     private $container;
-
-    public function __construct(Registry $doctrine, TwigEngine $templating, ContainerInterface $container)
+    
+    private $resultsFetcher;
+    
+    private $responseFormatter;
+        
+    
+    public function __construct(Registry $doctrine, ContainerInterface $container, ResultsFetcher $r, AutocompleteResponseFormatter $f)
     {
         $this->doctrine = $doctrine;
-        $this->templating = $templating;
         $this->container = $container;
+        $this->resultsFetcher = $r;
+        $this->responseFormatter = $f;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -87,7 +91,7 @@ class AutoCompleteType extends AbstractType
         $transformer = new EntityToAutocompleteDataTransformer($em, $options['class'], $options['identifier_propertypath']);
         $builder->addViewTransformer($transformer);
 
-        $builder->addEventSubscriber(new AutoCompleteTypeListener($this, $this->container, $options));
+        $builder->addEventSubscriber(new AutoCompleteTypeListener($this, $this->container, $options, $this->resultsFetcher, $this->responseFormatter));
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options)
@@ -105,19 +109,6 @@ class AutoCompleteType extends AbstractType
         if ($softDeleteEnabled) {
             $em->getFilters()->enable('soft_delete');
         }
-    }
-
-    public function getLabel($template, $result, array $searchWords = array(), $highlight = false, array $extraParams = null)
-    {
-        if ($template) {
-            $params = array("result" => $result, 'search_words' => $searchWords, 'highlight' => $highlight);
-            if (null !== $extraParams) {
-                $params = array_merge($params, $extraParams);
-            }
-            $result = $this->templating->render($template, $params);
-        }
-
-        return (string) $result;
     }
 
     public function getName()
