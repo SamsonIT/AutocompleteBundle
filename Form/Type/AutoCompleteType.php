@@ -105,7 +105,7 @@ class AutoCompleteType extends AbstractType
         if ($softDeleteEnabled) {
             $em->getFilters()->disable('soft_delete');
         }
-        $view->vars['attr']['data-display-value'] = null !== $form->getData() ? trim($this->getLabel($options['template'], $form->getData())) : null;
+        $view->vars['attr']['data-display-value'] = null !== $form->getData() ? trim($this->responseFormatter->formatLabelForAutocompleteResponse($options['template'], $form->getData())) : null;
         if ($softDeleteEnabled) {
             $em->getFilters()->enable('soft_delete');
         }

@@ -30,4 +30,11 @@ class AutocompleteResponseFormatter
             'textHighlight' => $this->labelBuilder->getLabelForHighlight($template, $entity, $searchFields, $extraParams)
         );
     }
+    
+    public function formatLabelForAutocompleteResponse($template, $entity, $options = array() ) 
+    {
+        $searchFields = array_key_exists('search-fields', $options) ? $options['search-fields'] : array();
+        $extraParams = array_key_exists('extra_params', $options) ? $options['extra_params'] : array();
+        return $this->labelBuilder->getLabel($template, $entity, $searchFields, $extraParams);
+    }
 }
