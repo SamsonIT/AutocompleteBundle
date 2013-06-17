@@ -11,7 +11,9 @@ class ResultsFetcher
 {
 
     /**
-     * 
+     *
+     * @deprecated( 'Use getResultsByRequest' )
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Doctrine\ORM\QueryBuilder $qb
      * @param array $searchFields
@@ -19,15 +21,23 @@ class ResultsFetcher
      */
     public function getResults(Request $request, QueryBuilder $qb, array $searchFields)
     {
-        $search = preg_split('/\s+/', trim($request->request->get(Autocomplete::KEY_SEARCH)));
-        $this->appendQuery($qb, $search, $searchFields);
-        $query = $qb->getQuery();
+        return $this->getResultsByRequest($request, $qb, $searchFields)->getQuery();
+    }
 
-        return $query;
+    public function getResultsByRequest(Request $request, QueryBuilder $qb, array $searchFields)
+    {
+        $search = preg_split('/\s+/', trim($request->request->get(Autocomplete::KEY_SEARCH)));
+        return $this->getResultsByArray($search, $qb, $searchFields);
+    }
+
+    public function getResultsByArray(array $search, QueryBuilder $qb, array $searchFields)
+    {
+        $this->appendQuery($qb, $search, $searchFields);
+        return $qb;
     }
 
     /**
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Doctrine\ORM\QueryBuilder $qb
      * @param array $searchFields
@@ -41,7 +51,7 @@ class ResultsFetcher
 
         $query->setFirstResult(($page - 1) * $pageSize);
         $query->setMaxResults($pageSize);
-        
+
         return new Paginator($query);
     }
 
@@ -51,10 +61,10 @@ class ResultsFetcher
             $expressions = array();
 
             foreach ($searchFields as $field) {
-                $expressions[] = $qb->expr()->like($field, ':query'.$key);
+                $expressions[] = $qb->expr()->like($field, ':query' . $key);
             }
-            $qb->andWhere("(".call_user_func_array(array($qb->expr(), 'orx'), $expressions).")");
-            $qb->setParameter('query'.$key, '%'.$searchWord.'%');
+            $qb->andWhere("(" . call_user_func_array(array($qb->expr(), 'orx'), $expressions) . ")");
+            $qb->setParameter('query' . $key, '%' . $searchWord . '%');
         }
     }
 }
