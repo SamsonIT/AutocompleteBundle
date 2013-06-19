@@ -2,6 +2,7 @@ $(document).ready(function() {
     $.fn.extend({
         samsonSelect2: function(options) {
             var $el = $(this);
+            var url = options.url ? options.url : null;
 
             $(this).select2($.extend({
                 placeholder: "",
@@ -27,7 +28,7 @@ $(document).ready(function() {
                         data = data + "&__autocomplete_search=" + escape(options.term);
 
                         $el.data('ajax', $.ajax({
-                            url: $el.closest('form').attr('action'),
+                            url: url ? url : $el.closest('form').attr('action'),
                             dataType: 'json',
                             type: 'POST',
                             data: data,
