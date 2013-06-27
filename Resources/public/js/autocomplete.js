@@ -1,8 +1,9 @@
 $(document).ready(function() {
     $.fn.extend({
         samsonSelect2: function(options) {
+            options = $.extend({}, options);
             var $el = $(this);
-            var url = options.url ? options.url : null;
+            var url = undefined !== typeof(options.url) ? options.url : null;
 
             $(this).select2($.extend({
                 placeholder: "",
