@@ -60,11 +60,11 @@ class ResultsFetcher
         foreach ($searchWords as $key => $searchWord) {
             $expressions = array();
 
-            foreach ($searchFields as $field) {
-                $expressions[] = $qb->expr()->like($field, ':query' . $key);
+            foreach ($searchFields as $key2 => $field) {
+                $expressions[] = $qb->expr()->like($field, ':query' . $key . $key2);
+                $qb->setParameter('query' . $key . $key2, '%' . $searchWord . '%');
             }
             $qb->andWhere("(" . call_user_func_array(array($qb->expr(), 'orx'), $expressions) . ")");
-            $qb->setParameter('query' . $key, '%' . $searchWord . '%');
         }
     }
 }
