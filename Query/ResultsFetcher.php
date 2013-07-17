@@ -45,7 +45,7 @@ class ResultsFetcher
      */
     public function getPaginatedResults(Request $request, QueryBuilder $qb, array $searchFields)
     {
-        $query = $this->getResults($request, $qb, $searchFields);
+        $query = $this->getResultsByRequest($request, $qb, $searchFields);
         $pageSize = $request->request->get(Autocomplete::KEY_LIMIT, 10);
         $page = $request->request->get(Autocomplete::KEY_PAGE, 1);
 
