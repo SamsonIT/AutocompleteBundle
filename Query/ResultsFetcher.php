@@ -26,7 +26,7 @@ class ResultsFetcher
 
     public function getResultsByRequest(Request $request, QueryBuilder $qb, array $searchFields)
     {
-        $search = preg_split('/\s+/', trim($request->request->get(Autocomplete::KEY_SEARCH)));
+        $search = preg_split('/\s+/', trim($request->get(Autocomplete::KEY_SEARCH)));
         return $this->getResultsByArray($search, $qb, $searchFields);
     }
 
@@ -46,8 +46,8 @@ class ResultsFetcher
     public function getPaginatedResults(Request $request, QueryBuilder $qb, array $searchFields)
     {
         $query = $this->getResultsByRequest($request, $qb, $searchFields);
-        $pageSize = $request->request->get(Autocomplete::KEY_LIMIT, 10);
-        $page = $request->request->get(Autocomplete::KEY_PAGE, 1);
+        $pageSize = $request->get(Autocomplete::KEY_LIMIT, 10);
+        $page = $request->get(Autocomplete::KEY_PAGE, 1);
 
         $query->setFirstResult(($page - 1) * $pageSize);
         $query->setMaxResults($pageSize);
