@@ -25,8 +25,8 @@ $(document).ready(function() {
                         var data = $el.closest('form').serialize();
                         data = data + "&__autocomplete_page_limit=" + 10;
                         data = data + "&__autocomplete_page=" + options.page;
-                        data = data + "&__autocomplete_path=" + escape($el.attr('name'));
-                        data = data + "&__autocomplete_search=" + escape(options.term);
+                        data = data + "&__autocomplete_path=" + encodeURIComponent($el.attr('name'));
+                        data = data + "&__autocomplete_search=" + encodeURIComponent(options.term);
 
                         $el.data('ajax', $.ajax({
                             url: url ? url : $el.closest('form').attr('action'),
