@@ -59,8 +59,19 @@ $(document).ready(function() {
                     return object.textHighlight;
                 },
                 dropdownCss: function() {
+                    var width = 'auto',
+                        labels = this.document.getElementsByClassName('select2-result-label');
+
+                    if (labels.length > 0) {
+                        var labelWidth = labels[0].offsetWidth;
+                        width = (labelWidth+10)+'px'; // scrollbar offset
+                        if (labelWidth < $el.parent().width()) {
+                            width = $el.parent().width()+'px';
+                        }
+                    }
+
                     return {
-                        width: 'auto', 
+                        width: width,
                         minWidth: $el.width()+'px'
                     }
                 },
