@@ -127,7 +127,7 @@ class AutoCompleteType extends AbstractType
             'em' => 'default',
             'query_builder' => null,
             'error_bubbling' => false,
-            'width' => '200px',
+            'width' => '186px',
             'identifier' => null,
             'extra_params' => array(),
             'data_class' => null,
