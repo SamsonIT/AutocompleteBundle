@@ -27,12 +27,14 @@ class ResultsFetcher
     public function getResultsByRequest(Request $request, QueryBuilder $qb, array $searchFields)
     {
         $search = preg_split('/\s+/', trim($request->get(Autocomplete::KEY_SEARCH)));
-        return $this->getResultsByArray($search, $qb, $searchFields);
+        return $this->getResultsByArray($search, $request->get(Autocomplete::KEY_PAGE, 1), $qb, $searchFields);
     }
 
-    public function getResultsByArray(array $search, QueryBuilder $qb, array $searchFields)
+    public function getResultsByArray(array $search, $page, QueryBuilder $qb, array $searchFields)
     {
         $this->appendQuery($qb, $search, $searchFields);
+        $qb->setMaxResults(10);
+        $qb->setFirstResult(($page - 1) * 10);
         return $qb;
     }
 
