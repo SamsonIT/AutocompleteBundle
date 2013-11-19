@@ -33,6 +33,16 @@ $(document).ready(function() {
                             dataType: 'json',
                             type: 'POST',
                             data: data,
+                            beforeSend: function (request)
+                            {
+                                request.setRequestHeader("X-XSRF-TOKEN", $.cookie('xsrf-token') );
+                            },
+                            dataFilter: function(data, type ) {
+                                if( data.substr(0,5) == ")]}'," ) {
+                                    data = data.substr(6);
+                                }
+                                return data;
+                            },
                             success: function(data) {
                                 options.callback({
                                     results: data.results, 
@@ -40,6 +50,9 @@ $(document).ready(function() {
                                 });
                             },
                             error: function(xhr,b,c) {
+                                console.log( xhr );
+                                console.log( b );
+                                console.log( c );
                                 if (xhr.statusText == 'abort') {
                                     return;
                                 }
