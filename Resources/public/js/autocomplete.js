@@ -35,7 +35,7 @@ $(document).ready(function() {
                             data: data,
                             beforeSend: function (request)
                             {
-                                request.setRequestHeader("X-XSRF-TOKEN", $.cookie('xsrf-token') );
+                                request.setRequestHeader("X-XSRF-TOKEN", $.cookie('XSRF-TOKEN') );
                             },
                             dataFilter: function(data, type ) {
                                 if( data.substr(0,5) == ")]}'," ) {
