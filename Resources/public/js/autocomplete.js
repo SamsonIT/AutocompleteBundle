@@ -50,9 +50,6 @@ $(document).ready(function() {
                                 });
                             },
                             error: function(xhr,b,c) {
-                                console.log( xhr );
-                                console.log( b );
-                                console.log( c );
                                 if (xhr.statusText == 'abort') {
                                     return;
                                 }
