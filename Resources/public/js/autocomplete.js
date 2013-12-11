@@ -33,16 +33,6 @@ $(document).ready(function() {
                             dataType: 'json',
                             type: 'POST',
                             data: data,
-                            beforeSend: function (request)
-                            {
-                                request.setRequestHeader("X-XSRF-TOKEN", $.cookie('XSRF-TOKEN') );
-                            },
-                            dataFilter: function(data, type ) {
-                                if( data.substr(0,5) == ")]}'," ) {
-                                    data = data.substr(6);
-                                }
-                                return data;
-                            },
                             success: function(data) {
                                 options.callback({
                                     results: data.results, 
