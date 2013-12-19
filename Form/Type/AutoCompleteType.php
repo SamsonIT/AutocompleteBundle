@@ -127,13 +127,15 @@ class AutoCompleteType extends AbstractType
             'em' => 'default',
             'query_builder' => null,
             'error_bubbling' => false,
-            'width' => '186px',
+            'width' => null,
             'identifier' => null,
             'extra_params' => array(),
             'data_class' => null,
             'identifier_propertypath' => null,
             'attr' => function(Options $options) {
-                return array('style' => 'width: '.$options['width']);
+                if ($options->has('width')) {
+                    return array('style' => 'width: '.$options['width']);
+                }
             }
         ));
 
