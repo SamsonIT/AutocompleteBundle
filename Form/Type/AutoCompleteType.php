@@ -5,7 +5,7 @@ namespace Samson\Bundle\AutocompleteBundle\Form\Type;
 use Closure;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ODM\PHPCR\Query\Builder\QueryBuilder;
 use Samson\Bundle\AutocompleteBundle\Form\DataTransformer\EntityToAutocompleteDataTransformer;
 use Samson\Bundle\AutocompleteBundle\Form\Listener\AutoCompleteTypeListener;
 use Samson\Bundle\AutocompleteBundle\Query\ResultsFetcher;
@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\File\Exception\UnexpectedTypeException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
+use Doctrine\Common\Persistence\AbstractManagerRegistry;
 
 
 /**
@@ -31,9 +32,9 @@ class AutoCompleteType extends AbstractType
 {
 
     /**
-     * @var Registry 
+     * @var AbstractManagerRegistry
      */
-    private $doctrine;
+    private $registry;
 
     /**
      * @var Container
@@ -45,9 +46,9 @@ class AutoCompleteType extends AbstractType
     private $responseFormatter;
         
     
-    public function __construct(Registry $doctrine, ContainerInterface $container, ResultsFetcher $r, AutocompleteResponseFormatter $f)
+    public function __construct(AbstractManagerRegistry $registry, ContainerInterface $container, ResultsFetcher $r, AutocompleteResponseFormatter $f)
     {
-        $this->doctrine = $doctrine;
+        $this->registry = $registry;
         $this->container = $container;
         $this->resultsFetcher = $r;
         $this->responseFormatter = $f;
@@ -55,7 +56,7 @@ class AutoCompleteType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $em = $this->doctrine->getManager($options['em']);
+        $em = $this->registry->getManager($options['em']);
         $er = $em->getRepository($options['class']);
 
         if ( ! isset($options['query_builder'])) {
@@ -100,15 +101,8 @@ class AutoCompleteType extends AbstractType
             return;
         }
 
-        $em = $this->doctrine->getManager();
-        $softDeleteEnabled = array_key_exists('soft_delete', $em->getFilters()->getEnabledFilters());
-        if ($softDeleteEnabled) {
-            $em->getFilters()->disable('soft_delete');
-        }
         $view->vars['attr']['data-display-value'] = null !== $form->getData() ? trim($this->responseFormatter->formatLabelForAutocompleteResponse($options['template'], $form->getData())) : null;
-        if ($softDeleteEnabled) {
-            $em->getFilters()->enable('soft_delete');
-        }
+
     }
 
     public function getName()

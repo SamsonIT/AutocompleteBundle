@@ -6,7 +6,7 @@
 
     <services>
         <service id="form.type.autocomplete" class="Samson\Bundle\AutocompleteBundle\Form\Type\AutoCompleteType">
-            <argument type="service" id="doctrine" />
+            <argument type="service" id="doctrine_phpcr" />
             <argument type="service" id="service_container" />
             <argument type="service" id="samson.autocomplete.results_fetcher" />
             <argument type="service" id="samson.autocomplete.response_formatter" />

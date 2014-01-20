@@ -2,6 +2,7 @@
 
 namespace Samson\Bundle\AutocompleteBundle\Form\DataTransformer;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\PropertyAccess\PropertyPath;
@@ -28,13 +29,13 @@ class EntityToAutocompleteDataTransformer implements DataTransformerInterface
     private $identifier;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager $om
      * @param string $class
      * @param PropertyPath $identifier
      */
-    public function __construct(EntityManager $em, $class, PropertyPath $identifier = null)
+    public function __construct(ObjectManager $om, $class, PropertyPath $identifier = null)
     {
-        $this->manager = $em;
+        $this->manager = $om;
         $this->class = $class;
         $this->identifier = $identifier;
     }

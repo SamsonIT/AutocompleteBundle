@@ -2,7 +2,7 @@
 
 namespace Samson\Bundle\AutocompleteBundle\Query;
 
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ODM\PHPCR\Query\Builder\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Samson\Bundle\AutocompleteBundle\Autocomplete\Autocomplete;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,12 @@ class ResultsFetcher
 
     public function getResultsByRequest(Request $request, QueryBuilder $qb, array $searchFields)
     {
-        $search = preg_split('/\s+/', trim($request->get(Autocomplete::KEY_SEARCH)));
+        $search = $request->get(Autocomplete::KEY_SEARCH, '');
+        if (strlen($search)) {
+            $search = preg_split('/\s+/', trim($search));
+        } else {
+            $search = array();
+        }
         return $this->getResultsByArray($search, $request->get(Autocomplete::KEY_PAGE, 1), $qb, $searchFields);
     }
 
@@ -54,11 +59,18 @@ class ResultsFetcher
         $query->setFirstResult(($page - 1) * $pageSize);
         $query->setMaxResults($pageSize);
 
-        return new Paginator($query);
+//        return new Paginator($query);
+        return $query->getQuery()->execute();
     }
 
     private function appendQuery(QueryBuilder $qb, array $searchWords, array $searchFields)
     {
+        if (count($searchWords)) {
+            $qb->andWhere()->like()->field($searchFields[0])->literal('%'.$searchWords[0].'%');
+        }
+
+        return;
+
         foreach ($searchWords as $key => $searchWord) {
             $expressions = array();
 
