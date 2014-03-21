@@ -24,7 +24,11 @@
         "symfony/symfony": "~2.1"
     },
     "autoload": {
-        "psr-0": { "Samson\\Bundle\\AutocompleteBundle": "" }
+        "psr-4": { "Samson\\Bundle\\AutocompleteBundle\\": "" }
     },
-    "target-dir": "Samson/Bundle/AutocompleteBundle"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
+    }
 }
