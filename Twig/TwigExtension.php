@@ -31,7 +31,10 @@ class TwigExtension extends Twig_Extension
         }
         if (!$context['highlight'])
             return $str;
-        $searchWords = $context['search_words'];
+        if (!array_key_exists(Autocomplete::KEY_SEARCH, $_POST)) {
+            return $str;
+        }
+        $searchWords = preg_split('/\s+/', trim($_POST[Autocomplete::KEY_SEARCH]));
 
         foreach ($searchWords as &$searchword) {
             $searchword = preg_quote($searchword, '/');
