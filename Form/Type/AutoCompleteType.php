@@ -31,7 +31,7 @@ class AutoCompleteType extends AbstractType
 {
 
     /**
-     * @var Registry 
+     * @var Registry
      */
     private $doctrine;
 
@@ -39,12 +39,12 @@ class AutoCompleteType extends AbstractType
      * @var Container
      */
     private $container;
-    
+
     private $resultsFetcher;
-    
+
     private $responseFormatter;
-        
-    
+
+
     public function __construct(Registry $doctrine, ContainerInterface $container, ResultsFetcher $r, AutocompleteResponseFormatter $f)
     {
         $this->doctrine = $doctrine;
@@ -105,7 +105,7 @@ class AutoCompleteType extends AbstractType
         if ($softDeleteEnabled) {
             $em->getFilters()->disable('soft_delete');
         }
-        $view->vars['attr']['data-display-value'] = null !== $form->getData() ? trim($this->responseFormatter->formatLabelForAutocompleteResponse($options['template'], $form->getData())) : null;
+        $view->vars['attr']['data-display-value'] = null !== $form->getNormData() ? trim($this->responseFormatter->formatLabelForAutocompleteResponse($options['template'], $form->getNormData())) : null;
         if ($softDeleteEnabled) {
             $em->getFilters()->enable('soft_delete');
         }
@@ -120,7 +120,7 @@ class AutoCompleteType extends AbstractType
     {
         return 'hidden';
     }
-   
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults( array(
