@@ -61,3 +61,6 @@ property is false, so this is also a valid template:
 {{ result.name|highlight }}
 ```
 
+Upgrade
+----------
+See [Upgrade.md](Upgrade.md)

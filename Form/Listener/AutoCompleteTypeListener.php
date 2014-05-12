@@ -120,14 +120,15 @@ class AutoCompleteTypeListener implements EventSubscriberInterface
         $extraParams = $this->options['extra_params'];
 
         $results = $this->resultsFetcher->getPaginatedResults($request, $form->getConfig()->getAttribute('query-builder'), $searchFields);
-
+        // $results still holds the total amount through (count)
+        $ttl = count($results);
         $responseData = array();
         $options = array('search-fields' => $searchFields, 'extra_params' => $extraParams);
         foreach ($results as $result) {
             $identifier = $this->options['identifier_propertypath'] ? $this->propertyAccessor->getValue($result, $this->options['identifier_propertypath']) : $result->getId();
             $responseData[] = $this->responseFormatter->formatResultLineForAutocompleteResponse($template, $result, $options, $identifier);
         }
-        throw new UnexpectedResponseException(new AutocompleteResponse($responseData));
+        throw new UnexpectedResponseException(new AutocompleteResponse($responseData, $ttl));
     }
 
     private function parseNameIntoParts($name, $formName)
