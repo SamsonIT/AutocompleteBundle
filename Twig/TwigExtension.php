@@ -5,6 +5,7 @@ namespace Samson\Bundle\AutocompleteBundle\Twig;
 use Twig_Error_Runtime;
 use Twig_Extension;
 use Twig_Filter_Method;
+use Samson\Bundle\AutocompleteBundle\Autocomplete\Autocomplete;
 
 /**
  * @author Bart van den Burg <bart@samson-it.nl>
