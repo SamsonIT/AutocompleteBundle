@@ -30,8 +30,9 @@ class TwigExtension extends Twig_Extension
         if (!array_key_exists('search_words', $context)) {
             throw new Twig_Error_Runtime('This filter can only be used in autocomplete templates!');
         }
-        if (!$context['highlight'])
+        if (!$context['highlight']) {
             return $str;
+        }
         if (!array_key_exists(Autocomplete::KEY_SEARCH, $_POST)) {
             return $str;
         }
@@ -40,12 +41,12 @@ class TwigExtension extends Twig_Extension
         foreach ($searchWords as &$searchword) {
             $searchword = preg_quote($searchword, '/');
         }
-        preg_match_all("/".implode("|", $searchWords)."/i", $str, $m, PREG_PATTERN_ORDER);
+        preg_match_all("/" . implode("|", $searchWords) . "/i", $str, $m, PREG_PATTERN_ORDER);
         $matches = array_values($m[0]);
         $replaces = array();
         foreach ($matches as $match) {
-            $replaces[] = '<span class="select2-match">'.$match.'</span>';
-            $str = preg_replace('/'.preg_quote($match, '/').'/', '#######', $str, 1);
+            $replaces[] = '<span class="select2-match">' . $match . '</span>';
+            $str = preg_replace('/' . preg_quote($match, '/') . '/', '#######', $str, 1);
         }
         $str = str_replace('#######', '%s', $str);
         $str = vsprintf($str, $replaces);
