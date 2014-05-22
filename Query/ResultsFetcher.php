@@ -57,7 +57,7 @@ class ResultsFetcher
         return new Paginator($query);
     }
 
-    private function appendQuery(QueryBuilder $qb, array $searchWords, array $searchFields)
+    public function appendQuery(QueryBuilder $qb, array $searchWords, array $searchFields)
     {
         foreach ($searchWords as $key => $searchWord) {
             $expressions = array();
