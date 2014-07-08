@@ -96,6 +96,7 @@ class AutoCompleteType extends AbstractType
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars['placeholder'] = $options['placeholder'];
         if (array_key_exists('data-display-value', $view->vars['attr']) && $view->vars['attr']['data-display-value']) {
             return;
         }
@@ -124,6 +125,7 @@ class AutoCompleteType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults( array(
+            'placeholder' => '',
             'em' => 'default',
             'query_builder' => null,
             'error_bubbling' => false,
