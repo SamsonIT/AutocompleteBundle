@@ -63,8 +63,8 @@ class ResultsFetcher
             $expressions = array();
 
             foreach ($searchFields as $key2 => $field) {
-                $expressions[] = $qb->expr()->like($field, ':query' . $key . $key2);
-                $qb->setParameter('query' . $key . $key2, '%' . $searchWord . '%');
+                $expressions[] = $qb->expr()->like($qb->expr()->lower($field), ':query' . $key . $key2);
+                $qb->setParameter('query' . $key . $key2, '%' . strtolower($searchWord) . '%');
             }
             $qb->andWhere("(" . call_user_func_array(array($qb->expr(), 'orx'), $expressions) . ")");
         }
