@@ -44,6 +44,7 @@ class TwigExtension extends Twig_Extension
         preg_match_all("/" . implode("|", $searchWords) . "/i", $str, $m, PREG_PATTERN_ORDER);
         $matches = array_values($m[0]);
         $replaces = array();
+        $str = str_replace(' ', '&nbsp;', $str);
         foreach ($matches as $match) {
             $replaces[] = '<span class="select2-match">' . $match . '</span>';
             $str = preg_replace('/' . preg_quote($match, '/') . '/', '#######', $str, 1);
