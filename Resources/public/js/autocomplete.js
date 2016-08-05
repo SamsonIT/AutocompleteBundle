@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(document).ready(function() {
     $.fn.extend({
         samsonSelect2: function(options) {
             options = $.extend({}, options);
