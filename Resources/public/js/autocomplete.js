@@ -6,7 +6,6 @@ jQuery(document).ready(function() {
             var url = undefined !== typeof(options.url) ? options.url : null;
 
             $(this).select2($.extend({
-                escapeMarkup: function (markup) { console.log("Escape: ", markup); return markup; },
                 placeholder: "",
                 allowClear: true,
                 initSelection: function(element, callback) {
